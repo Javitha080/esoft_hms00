@@ -1,0 +1,5 @@
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\FullHMS.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\FullHMS.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\FullHMS.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\FullHMS.AssemblyInfo.cs
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\FullHMS.csproj.CoreCompileInputs.cache
