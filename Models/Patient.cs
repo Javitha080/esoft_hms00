@@ -19,12 +19,12 @@ namespace HospitalManagementSystem.Models
 
         // Contact information
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
+        public string? Email { get; set; }
+        public string? Address { get; set; }
 
         // Medical information
-        public string BloodGroup { get; set; }
-        public string MedicalHistory { get; set; }
+        public string? BloodGroup { get; set; }
+        public string? MedicalHistory { get; set; }
 
         // Status and tracking
         public DateTime RegistrationDate { get; set; }
@@ -57,6 +57,10 @@ namespace HospitalManagementSystem.Models
         /// </summary>
         public Patient()
         {
+            FirstName = "";
+            LastName = "";
+            Gender = "";
+            PhoneNumber = "";
             RegistrationDate = DateTime.Now;
             IsActive = true;
         }

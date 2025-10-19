@@ -1,6 +1,6 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using HospitalManagementSystem.Models;
 
 namespace HospitalManagementSystem.DAL
@@ -17,15 +17,15 @@ namespace HospitalManagementSystem.DAL
         /// <param name="username">Username</param>
         /// <param name="password">Password</param>
         /// <returns>User object if authentication is successful, null otherwise</returns>
-        public User AuthenticateUser(string username, string password)
+        public User? AuthenticateUser(string username, string password)
         {
             try
             {
                 string query = "SELECT * FROM Users WHERE Username = @Username AND Password = @Password AND IsActive = 1";
                 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@Username", username),
-                    new SqlParameter("@Password", password)
+                    new("@Username", username),
+                    new("@Password", password)
                 };
 
                 DataTable dt = DatabaseConnection.ExecuteQuery(query, parameters);
@@ -33,17 +33,18 @@ namespace HospitalManagementSystem.DAL
                 if (dt.Rows.Count > 0)
                 {
                     DataRow row = dt.Rows[0];
-                    User user = new User
+                    User user = new()
                     {
                         UserID = Convert.ToInt32(row["UserID"]),
-                        Username = row["Username"].ToString(),
-                        Password = row["Password"].ToString(),
-                        Role = row["Role"].ToString(),
-                        FullName = row["FullName"].ToString(),
+                        Username = row["Username"].ToString() ?? "",
+                        Password = row["Password"].ToString() ?? "",
+                        Role = row["Role"].ToString() ?? "",
+                        FullName = row["FullName"].ToString() ?? "",
                         Email = row["Email"] != DBNull.Value ? row["Email"].ToString() : "",
                         PhoneNumber = row["PhoneNumber"] != DBNull.Value ? row["PhoneNumber"].ToString() : "",
                         IsActive = Convert.ToBoolean(row["IsActive"]),
                         CreatedDate = Convert.ToDateTime(row["CreatedDate"])
+
                     };
 
                     // Update last login time
@@ -71,8 +72,8 @@ namespace HospitalManagementSystem.DAL
                 string query = "UPDATE Users SET LastLogin = @LastLogin WHERE UserID = @UserID";
                 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@LastLogin", DateTime.Now),
-                    new SqlParameter("@UserID", userID)
+                    new("@LastLogin", DateTime.Now),
+                    new("@UserID", userID)
                 };
 
                 DatabaseConnection.ExecuteNonQuery(query, parameters);
@@ -96,14 +97,14 @@ namespace HospitalManagementSystem.DAL
                                 VALUES (@Username, @Password, @Role, @FullName, @Email, @PhoneNumber, @IsActive, @CreatedDate)";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@Username", user.Username),
-                    new SqlParameter("@Password", user.Password),
-                    new SqlParameter("@Role", user.Role),
-                    new SqlParameter("@FullName", user.FullName),
-                    new SqlParameter("@Email", (object)user.Email ?? DBNull.Value),
-                    new SqlParameter("@PhoneNumber", (object)user.PhoneNumber ?? DBNull.Value),
-                    new SqlParameter("@IsActive", user.IsActive),
-                    new SqlParameter("@CreatedDate", user.CreatedDate)
+                    new("@Username", user.Username),
+                    new("@Password", user.Password),
+                    new("@Role", user.Role),
+                    new("@FullName", user.FullName),
+                    new("@Email", (object)user.Email ?? DBNull.Value),
+                    new("@PhoneNumber", (object)user.PhoneNumber ?? DBNull.Value),
+                    new("@IsActive", user.IsActive),
+                    new("@CreatedDate", user.CreatedDate)
                 };
 
                 int result = DatabaseConnection.ExecuteNonQuery(query, parameters);
@@ -144,7 +145,7 @@ namespace HospitalManagementSystem.DAL
                 string query = "SELECT COUNT(*) FROM Users WHERE Username = @Username";
                 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@Username", username)
+                    new("@Username", username)
                 };
 
                 int count = Convert.ToInt32(DatabaseConnection.ExecuteScalar(query, parameters));

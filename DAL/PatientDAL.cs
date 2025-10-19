@@ -1,6 +1,6 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using HospitalManagementSystem.Models;
 
 namespace HospitalManagementSystem.DAL
@@ -69,17 +69,17 @@ namespace HospitalManagementSystem.DAL
                                 WHERE PatientID = @PatientID";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@PatientID", patient.PatientID),
-                    new SqlParameter("@FirstName", patient.FirstName),
-                    new SqlParameter("@LastName", patient.LastName),
-                    new SqlParameter("@DateOfBirth", patient.DateOfBirth),
-                    new SqlParameter("@Gender", patient.Gender),
-                    new SqlParameter("@PhoneNumber", patient.PhoneNumber),
-                    new SqlParameter("@Email", (object)patient.Email ?? DBNull.Value),
-                    new SqlParameter("@Address", (object)patient.Address ?? DBNull.Value),
-                    new SqlParameter("@BloodGroup", (object)patient.BloodGroup ?? DBNull.Value),
-                    new SqlParameter("@MedicalHistory", (object)patient.MedicalHistory ?? DBNull.Value),
-                    new SqlParameter("@IsActive", patient.IsActive)
+                    new("@PatientID", patient.PatientID),
+                    new("@FirstName", patient.FirstName),
+                    new("@LastName", patient.LastName),
+                    new("@DateOfBirth", patient.DateOfBirth),
+                    new("@Gender", patient.Gender),
+                    new("@PhoneNumber", patient.PhoneNumber),
+                    new("@Email", (object)patient.Email ?? DBNull.Value),
+                    new("@Address", (object)patient.Address ?? DBNull.Value),
+                    new("@BloodGroup", (object)patient.BloodGroup ?? DBNull.Value),
+                    new("@MedicalHistory", (object)patient.MedicalHistory ?? DBNull.Value),
+                    new("@IsActive", patient.IsActive)
                 };
 
                 int result = DatabaseConnection.ExecuteNonQuery(query, parameters);
@@ -103,7 +103,7 @@ namespace HospitalManagementSystem.DAL
                 string query = "UPDATE Patients SET IsActive = 0 WHERE PatientID = @PatientID";
                 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@PatientID", patientID)
+                    new("@PatientID", patientID)
                 };
 
                 int result = DatabaseConnection.ExecuteNonQuery(query, parameters);
@@ -160,7 +160,7 @@ namespace HospitalManagementSystem.DAL
                                 ORDER BY FirstName, LastName";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@SearchText", "%" + searchText + "%")
+                    new("@SearchText", "%" + searchText + "%")
                 };
 
                 return DatabaseConnection.ExecuteQuery(query, parameters);
@@ -176,14 +176,14 @@ namespace HospitalManagementSystem.DAL
         /// </summary>
         /// <param name="patientID">Patient ID</param>
         /// <returns>Patient object</returns>
-        public Patient GetPatientByID(int patientID)
+        public Patient? GetPatientByID(int patientID)
         {
             try
             {
                 string query = "SELECT * FROM Patients WHERE PatientID = @PatientID";
                 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@PatientID", patientID)
+                    new("@PatientID", patientID)
                 };
 
                 DataTable dt = DatabaseConnection.ExecuteQuery(query, parameters);
@@ -191,14 +191,14 @@ namespace HospitalManagementSystem.DAL
                 if (dt.Rows.Count > 0)
                 {
                     DataRow row = dt.Rows[0];
-                    return new Patient
+                    return new()
                     {
                         PatientID = Convert.ToInt32(row["PatientID"]),
-                        FirstName = row["FirstName"].ToString(),
-                        LastName = row["LastName"].ToString(),
+                        FirstName = row["FirstName"].ToString() ?? "",
+                        LastName = row["LastName"].ToString() ?? "",
                         DateOfBirth = Convert.ToDateTime(row["DateOfBirth"]),
-                        Gender = row["Gender"].ToString(),
-                        PhoneNumber = row["PhoneNumber"].ToString(),
+                        Gender = row["Gender"].ToString() ?? "",
+                        PhoneNumber = row["PhoneNumber"].ToString() ?? "",
                         Email = row["Email"] != DBNull.Value ? row["Email"].ToString() : "",
                         Address = row["Address"] != DBNull.Value ? row["Address"].ToString() : "",
                         BloodGroup = row["BloodGroup"] != DBNull.Value ? row["BloodGroup"].ToString() : "",

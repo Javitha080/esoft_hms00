@@ -19,15 +19,15 @@ namespace HospitalManagementSystem.Models
         public DateTime AppointmentDate { get; set; }
         public TimeSpan AppointmentTime { get; set; }
         public string Status { get; set; } // Scheduled, Completed, Cancelled
-        public string Reason { get; set; }
-        public string Notes { get; set; }
+        public string? Reason { get; set; }
+        public string? Notes { get; set; }
 
         // Tracking
         public DateTime CreatedDate { get; set; }
 
         // Additional properties for display purposes (not in database)
-        public string PatientName { get; set; }
-        public string DoctorName { get; set; }
+        public string? PatientName { get; set; }
+        public string? DoctorName { get; set; }
 
         /// <summary>
         /// Default constructor

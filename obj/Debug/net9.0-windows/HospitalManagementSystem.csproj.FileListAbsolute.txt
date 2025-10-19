@@ -1,0 +1,5 @@
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\HospitalManagementSystem.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\HospitalManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\HospitalManagementSystem.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\HospitalManagementSystem.AssemblyInfo.cs
+C:\Users\user\source\repos\FullHMS\FullHMS\obj\Debug\net9.0-windows\HospitalManagementSystem.csproj.CoreCompileInputs.cache

@@ -1,6 +1,6 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using HospitalManagementSystem.Models;
 
 namespace HospitalManagementSystem.DAL
@@ -16,7 +16,7 @@ namespace HospitalManagementSystem.DAL
         /// </summary>
         /// <param name="bill">Bill object</param>
         /// <returns>True if successful, false otherwise</returns>
-        public bool AddBill(Bill bill)
+        public static bool AddBill(Bill bill)
         {
             try
             {
@@ -24,16 +24,16 @@ namespace HospitalManagementSystem.DAL
                                 VALUES (@PatientID, @AppointmentID, @BillDate, @ConsultationFee, @MedicineFee, @TestFee, @OtherCharges, @PaymentStatus, @PaymentMethod, @PaidAmount)";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@PatientID", bill.PatientID),
-                    new SqlParameter("@AppointmentID", (object)bill.AppointmentID ?? DBNull.Value),
-                    new SqlParameter("@BillDate", bill.BillDate),
-                    new SqlParameter("@ConsultationFee", bill.ConsultationFee),
-                    new SqlParameter("@MedicineFee", bill.MedicineFee),
-                    new SqlParameter("@TestFee", bill.TestFee),
-                    new SqlParameter("@OtherCharges", bill.OtherCharges),
-                    new SqlParameter("@PaymentStatus", bill.PaymentStatus),
-                    new SqlParameter("@PaymentMethod", (object)bill.PaymentMethod ?? DBNull.Value),
-                    new SqlParameter("@PaidAmount", bill.PaidAmount)
+                    new("@PatientID", bill.PatientID),
+                    new("@AppointmentID", (object)bill.AppointmentID ?? DBNull.Value),
+                    new("@BillDate", bill.BillDate),
+                    new("@ConsultationFee", bill.ConsultationFee),
+                    new("@MedicineFee", bill.MedicineFee),
+                    new("@TestFee", bill.TestFee),
+                    new("@OtherCharges", bill.OtherCharges),
+                    new("@PaymentStatus", bill.PaymentStatus),
+                    new("@PaymentMethod", (object)bill.PaymentMethod ?? DBNull.Value),
+                    new("@PaidAmount", bill.PaidAmount)
                 };
 
                 int result = DatabaseConnection.ExecuteNonQuery(query, parameters);
@@ -50,7 +50,7 @@ namespace HospitalManagementSystem.DAL
         /// </summary>
         /// <param name="bill">Bill object with updated information</param>
         /// <returns>True if successful, false otherwise</returns>
-        public bool UpdateBill(Bill bill)
+        public static bool UpdateBill(Bill bill)
         {
             try
             {
@@ -65,14 +65,14 @@ namespace HospitalManagementSystem.DAL
                                 WHERE BillID = @BillID";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@BillID", bill.BillID),
-                    new SqlParameter("@ConsultationFee", bill.ConsultationFee),
-                    new SqlParameter("@MedicineFee", bill.MedicineFee),
-                    new SqlParameter("@TestFee", bill.TestFee),
-                    new SqlParameter("@OtherCharges", bill.OtherCharges),
-                    new SqlParameter("@PaymentStatus", bill.PaymentStatus),
-                    new SqlParameter("@PaymentMethod", (object)bill.PaymentMethod ?? DBNull.Value),
-                    new SqlParameter("@PaidAmount", bill.PaidAmount)
+                    new("@BillID", bill.BillID),
+                    new("@ConsultationFee", bill.ConsultationFee),
+                    new("@MedicineFee", bill.MedicineFee),
+                    new("@TestFee", bill.TestFee),
+                    new("@OtherCharges", bill.OtherCharges),
+                    new("@PaymentStatus", bill.PaymentStatus),
+                    new("@PaymentMethod", (object)bill.PaymentMethod ?? DBNull.Value),
+                    new("@PaidAmount", bill.PaidAmount)
                 };
 
                 int result = DatabaseConnection.ExecuteNonQuery(query, parameters);
@@ -88,7 +88,7 @@ namespace HospitalManagementSystem.DAL
         /// Gets all bills from the database.
         /// </summary>
         /// <returns>DataTable containing all bills</returns>
-        public DataTable GetAllBills()
+        public static DataTable GetAllBills()
         {
             try
             {
@@ -122,7 +122,7 @@ namespace HospitalManagementSystem.DAL
         /// </summary>
         /// <param name="patientID">Patient ID</param>
         /// <returns>DataTable containing bills for the specified patient</returns>
-        public DataTable GetBillsByPatient(int patientID)
+        public static DataTable GetBillsByPatient(int patientID)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace HospitalManagementSystem.DAL
                                 ORDER BY BillDate DESC";
 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@PatientID", patientID)
+                    new("@PatientID", patientID)
                 };
 
                 return DatabaseConnection.ExecuteQuery(query, parameters);
@@ -159,14 +159,14 @@ namespace HospitalManagementSystem.DAL
         /// </summary>
         /// <param name="billID">Bill ID</param>
         /// <returns>Bill object</returns>
-        public Bill GetBillByID(int billID)
+        public static Bill? GetBillByID(int billID)
         {
             try
             {
                 string query = "SELECT * FROM Bills WHERE BillID = @BillID";
                 
                 SqlParameter[] parameters = {
-                    new SqlParameter("@BillID", billID)
+                    new("@BillID", billID)
                 };
 
                 DataTable dt = DatabaseConnection.ExecuteQuery(query, parameters);
@@ -174,7 +174,7 @@ namespace HospitalManagementSystem.DAL
                 if (dt.Rows.Count > 0)
                 {
                     DataRow row = dt.Rows[0];
-                    return new Bill
+                    return new()
                     {
                         BillID = Convert.ToInt32(row["BillID"]),
                         PatientID = Convert.ToInt32(row["PatientID"]),
@@ -184,7 +184,7 @@ namespace HospitalManagementSystem.DAL
                         MedicineFee = Convert.ToDecimal(row["MedicineFee"]),
                         TestFee = Convert.ToDecimal(row["TestFee"]),
                         OtherCharges = Convert.ToDecimal(row["OtherCharges"]),
-                        PaymentStatus = row["PaymentStatus"].ToString(),
+                        PaymentStatus = row["PaymentStatus"].ToString() ?? "",
                         PaymentMethod = row["PaymentMethod"] != DBNull.Value ? row["PaymentMethod"].ToString() : "",
                         PaidAmount = Convert.ToDecimal(row["PaidAmount"])
                     };
@@ -202,7 +202,7 @@ namespace HospitalManagementSystem.DAL
         /// Gets pending bills (bills with outstanding balance).
         /// </summary>
         /// <returns>DataTable containing pending bills</returns>
-        public DataTable GetPendingBills()
+        public static DataTable GetPendingBills()
         {
             try
             {

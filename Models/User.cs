@@ -20,8 +20,8 @@ namespace HospitalManagementSystem.Models
 
         // Personal information
         public string FullName { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
 
         // Status and tracking
         public bool IsActive { get; set; }
@@ -33,6 +33,10 @@ namespace HospitalManagementSystem.Models
         /// </summary>
         public User()
         {
+            Username = "";
+            Password = "";
+            Role = "";
+            FullName = "";
             IsActive = true;
             CreatedDate = DateTime.Now;
         }

@@ -24,11 +24,11 @@ namespace HospitalManagementSystem.Models
 
         // Payment details
         public string PaymentStatus { get; set; } // Pending, Paid, Partial
-        public string PaymentMethod { get; set; } // Cash, Card, Insurance, Online
+        public string? PaymentMethod { get; set; } // Cash, Card, Insurance, Online
         public decimal PaidAmount { get; set; }
 
         // Additional properties for display purposes (not in database)
-        public string PatientName { get; set; }
+        public string? PatientName { get; set; }
 
         /// <summary>
         /// Calculates and returns the total amount of the bill

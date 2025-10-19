@@ -13,7 +13,7 @@ namespace HospitalManagementSystem
     {
         // Connection string to connect to SQL Server database
         // In a real application, this should be stored in App.config or Web.config
-        private static string connectionString = "Data Source=localhost;Initial Catalog=HospitalManagementDB;Integrated Security=True;TrustServerCertificate=True;";
+        private static string connectionString = "Data Source=Javitha00\\XENON;Initial Catalog=HospitalManagementDB;Integrated Security=True;TrustServerCertificate=True;";
 
         /// <summary>
         /// Gets a new SQL connection to the database.
@@ -58,7 +58,7 @@ namespace HospitalManagementSystem
         /// <param name="query">SQL SELECT query</param>
         /// <param name="parameters">Optional SQL parameters</param>
         /// <returns>DataTable containing query results</returns>
-        public static DataTable ExecuteQuery(string query, SqlParameter[]? parameters = null)
+        public static DataTable ExecuteQuery(string query, Microsoft.Data.SqlClient.SqlParameter[]? parameters = null)
         {
             DataTable dataTable = new DataTable();
             
@@ -97,7 +97,8 @@ namespace HospitalManagementSystem
         /// <param name="query">SQL query (INSERT, UPDATE, DELETE)</param>
         /// <param name="parameters">Optional SQL parameters</param>
         /// <returns>Number of rows affected</returns>
-        public static int ExecuteNonQuery(string query, SqlParameter[]? parameters = null)
+        public static int ExecuteNonQuery(string query, Microsoft.Data.SqlClient.SqlParameter[]? parameters = null)
+
         {
             int rowsAffected = 0;
 
@@ -132,7 +133,8 @@ namespace HospitalManagementSystem
         /// <param name="query">SQL query</param>
         /// <param name="parameters">Optional SQL parameters</param>
         /// <returns>The first column of the first row in the result set</returns>
-        public static object? ExecuteScalar(string query, SqlParameter[]? parameters = null)
+        public static object? ExecuteScalar(string query, Microsoft.Data.SqlClient.SqlParameter[]? parameters = null)
+
         {
             object? result = null;
 

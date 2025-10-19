@@ -15,15 +15,15 @@ namespace HospitalManagementSystem.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Specialization { get; set; }
-        public string Qualification { get; set; }
+        public string? Qualification { get; set; }
 
         // Contact information
         public string PhoneNumber { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         // Professional information
         public decimal ConsultationFee { get; set; }
-        public string AvailableDays { get; set; }
+        public string? AvailableDays { get; set; }
         public TimeSpan AvailableTimeStart { get; set; }
         public TimeSpan AvailableTimeEnd { get; set; }
 
@@ -44,6 +44,10 @@ namespace HospitalManagementSystem.Models
         /// </summary>
         public Doctor()
         {
+            FirstName = "";
+            LastName = "";
+            Specialization = "";
+            PhoneNumber = "";
             JoiningDate = DateTime.Now;
             IsActive = true;
         }

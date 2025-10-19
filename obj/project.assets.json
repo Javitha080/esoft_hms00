@@ -2024,9 +2024,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\user\\source\\repos\\FullHMS\\FullHMS\\FullHMS.csproj",
-      "projectName": "FullHMS",
-      "projectPath": "C:\\Users\\user\\source\\repos\\FullHMS\\FullHMS\\FullHMS.csproj",
+      "projectUniqueName": "C:\\Users\\user\\source\\repos\\FullHMS\\FullHMS\\HospitalManagementSystem.csproj",
+      "projectName": "HospitalManagementSystem",
+      "projectPath": "C:\\Users\\user\\source\\repos\\FullHMS\\FullHMS\\HospitalManagementSystem.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\user\\source\\repos\\FullHMS\\FullHMS\\obj\\",
       "projectStyle": "PackageReference",
